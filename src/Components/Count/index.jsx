@@ -1,11 +1,20 @@
-import React from 'react'; 
+import React, { useEffect } from 'react'; 
 import { useDispatch, useSelector } from 'react-redux'; 
-import { decrementCount, incrementCount, resetCount } from '../../features';
+import { decrementCount, incrementCount, resetCount, setCount } from '../../features';
 
 const Count = () => {   
   const { count } = useSelector((state) => state?.counter);   
   const dispatch = useDispatch();    
 
+  useEffect(()=> {
+    dispatch(setCount(Number(localStorage.getItem("count")))) 
+  }, [])
+
+  useEffect(()=> {
+    localStorage.setItem("count", count)
+  }, [count])
+  
+  
   return (     
     <div className="min-h-screen flex flex-col justify-center items-center bg-gradient-to-br from-gray-800 via-purple-900 to-black text-white p-2">       
       <div className="bg-gradient-to-br from-gray-700 via-gray-800 to-gray-900 text-gray-200 p-6 sm:p-10 rounded-xl shadow-2xl w-full sm:w-96">         
